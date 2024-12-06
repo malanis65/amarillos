@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartel Soportes</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Ícono agregado -->
+    <style>
+        /* Tus estilos CSS */
+    </style>
+</head>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartel Soportes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #007BFF;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label, input, button {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        input[type="number"], button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .radios {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .radios label {
+            margin: 0;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 50%;
+            height: auto;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .output p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cartel Soportes</h1>
+    <div class="container">
+        <label for="ancho">Ancho cm:</label>
+        <input type="number" id="ancho" placeholder="Introduce el ancho">
+
+        <label for="alto">Alto cm:</label>
+        <input type="number" id="alto" placeholder="Introduce el alto">
+
+        <button onclick="habilitarRadios()">Ingresar Valores</button>
+
+        <div class="radios">
+            <label><input type="radio" id="radio1" name="Cartel" onclick="mostrarImagen(1)" disabled> 2 Sopertes</label>
+            <label><input type="radio" id="radio2" name="Cartel" onclick="mostrarImagen(2)" disabled> 3 Soportes</label>
+            <label><input type="radio" id="radio3" name="Cartel" onclick="mostrarImagen(3)" disabled> 4 Soportes</label>
+        </div>
+
+        <img id="imagen" src="" alt="Imagen del cartel" style="display: none;">
+
+        <div class="output">
+            <p>Distancia 1: <span id="dist1">0</span>
+            <p>Distancia 2: <span id="dist2">0</span></p>
+            <p>Resto: <span id="resto">0</span></p>
+            <p>m2: <span id="resultadoAlto">0</span></p>
+            <p>Nº de Lamas: <span id="numLamas">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        function habilitarRadios() {
+            const ancho = parseFloat(document.getElementById('ancho').value);
+            const alto = parseFloat(document.getElementById('alto').value);
+
+            if (!ancho || !alto) {
+                alert("Por favor, introduce valores válidos para ancho y alto.");
+                return;
+            }
+
+            document.getElementById('radio1').disabled = false;
+            document.getElementById('radio2').disabled = false;
+            document.getElementById('radio3').disabled = false;
+        }
+
+        function mostrarImagen(tipo) {
+            const ancho = parseFloat(document.getElementById('ancho').value);
+            const alto = parseFloat(document.getElementById('alto').value);
+            const dist1 = ancho / 8;
+            const resultadoAlto = (ancho * alto) / 10000;
+            const numLamas = alto / 17.5;
+
+            document.getElementById('dist1').textContent = dist1.toFixed(2);
+            document.getElementById('dist2').textContent = dist1.toFixed(2);
+            document.getElementById('resultadoAlto').textContent = resultadoAlto.toFixed(2);
+            document.getElementById('numLamas').textContent = numLamas.toFixed(2);
+
+            let resto;
+            if (tipo === 1) {
+                document.getElementById('imagen').src = 'cartel-1.jpg';
+                resto = ancho - (dist1 * 2);
+            } else if (tipo === 2) {
+                document.getElementById('imagen').src = 'cartel-2.jpg';
+                resto = (ancho - (dist1 * 2)) / 2;
+            } else if (tipo === 3) {
+                document.getElementById('imagen').src = 'cartel-3.jpg';
+                resto = (ancho - (dist1 * 2)) / 3;
+            }
+
+            document.getElementById('resto').textContent = resto.toFixed(2);
+            document.getElementById('imagen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
